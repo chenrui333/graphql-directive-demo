@@ -1,9 +1,15 @@
+directive @markEntityMutation(entityType: MarkEntityMutationSupportedType, entityData: String) on FIELD_DEFINITION
+
+enum MarkEntityMutationSupportedType {
+  GROUP
+}
+
 type Query {
     movies(titleFilter: String): [Movie!]!
 }
 
 type Mutation {
-    addRating(rating: RatingInput!): Rating
+    addRating(rating: RatingInput!): Rating @markEntityMutation(entityType: GROUP, entityData: "groupSlug")
 }
 
 type Movie {

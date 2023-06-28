@@ -1,5 +1,6 @@
 package com.github.chenrui333;
 
+import com.github.chenrui333.directive.MarkEntityMutationDirective;
 import com.github.chenrui333.model.Movie;
 import com.github.chenrui333.model.Rating;
 import graphql.ExecutionInput;
@@ -40,6 +41,7 @@ public class GraphqlQueryExecutor {
   private RuntimeWiring buildRuntimeWiring() {
     // Add runtime wiring configurations here
     return RuntimeWiring.newRuntimeWiring()
+      .directiveWiring(new MarkEntityMutationDirective())
       .type(newTypeWiring("Query")
         .dataFetcher("movies", environment -> {
           String titleFilter = environment.getArgument("titleFilter");
