@@ -1,10 +1,15 @@
 package com.github.chenrui333;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import graphql.ExecutionInput;
+import graphql.ExecutionResult;
 import io.jooby.Jooby;
 import io.jooby.ServerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 public class GraphqlServer extends Jooby {
   private final Logger log = LoggerFactory.getLogger(GraphqlServer.class);
@@ -16,13 +21,18 @@ public class GraphqlServer extends Jooby {
     post("/", ctx -> "Hello World Post!");
     post("/graphql", ctx ->{
 
-      var query = ctx.body().value("query");
-      log.info("body: {}", ctx.body().value());
-      log.info("query: {}", query);
-//      String value = ctx.body().value();
-//      ExecutionInput executionInput = ExecutionInput.newExecutionInput().query(value).build();
-      String value = "query ken_test { movies(titleFilter: \"test\") { title } }";
-      return new GraphqlQueryExecutor().execute(value).getData();
+
+      var rawPayload = new String(ctx.body().bytes());
+      ObjectMapper objectMapper = new ObjectMapper();
+      JsonNode jsonNode = objectMapper.readTree(rawPayload);
+      String query = jsonNode.get("query").asText();
+      ExecutionResult er = new GraphqlQueryExecutor().execute(query);
+      // turn object into Json, then Json into a String
+      return "{ \"data\":\n" +
+        "          {\n" +
+        "          \"self\": { \"id\": \"202446493\" }\n" +
+        "          }\n" +
+        "        }";
   });
   }
 
