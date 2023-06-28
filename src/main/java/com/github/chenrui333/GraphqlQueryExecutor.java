@@ -57,7 +57,7 @@ public class GraphqlQueryExecutor {
           Integer stars = (Integer) ratingInput.get("stars");
           Integer releaseYear = (Integer) ratingInput.get("releaseYear");
           // Replace this with actual logic to add rating
-          return new Rating();
+          return new Rating(stars);
         }))
       .build();
   }
