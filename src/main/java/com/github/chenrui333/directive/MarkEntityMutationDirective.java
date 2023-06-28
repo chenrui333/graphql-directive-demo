@@ -14,10 +14,11 @@ public class MarkEntityMutationDirective implements SchemaDirectiveWiring {
   @Override
   public GraphQLObjectType onObject(SchemaDirectiveWiringEnvironment<GraphQLObjectType> env) {
     var parent = env.getElement();
+    log.info("object intercepted");
     parent.getFieldDefinitions().stream()
       .forEach(
         field -> {
-          log.info("object intercepted {}", field);
+          log.info("field intercepted {}", field);
         });
     return parent;
   }
