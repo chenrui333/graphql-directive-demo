@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class GraphqlServer extends Jooby {
   private final Logger log = LoggerFactory.getLogger(GraphqlServer.class);
@@ -26,13 +27,9 @@ public class GraphqlServer extends Jooby {
       ObjectMapper objectMapper = new ObjectMapper();
       JsonNode jsonNode = objectMapper.readTree(rawPayload);
       String query = jsonNode.get("query").asText();
-      ExecutionResult er = new GraphqlQueryExecutor().execute(query);
-      // turn object into Json, then Json into a String
-      return "{ \"data\":\n" +
-        "          {\n" +
-        "          \"self\": { \"id\": \"202446493\" }\n" +
-        "          }\n" +
-        "        }";
+      ExecutionResult executionResult = new GraphqlQueryExecutor().execute(query);
+      Map<String, Object> resultObject = executionResult.toSpecification();
+      return  objectMapper.writeValueAsString(resultObject);
   });
   }
 
