@@ -62,9 +62,10 @@ public class GraphqlQueryExecutor {
       .build();
   }
   public ExecutionResult execute(String query) {
-    ExecutionInput executionInput = ExecutionInput.newExecutionInput()
-      .query(query)
-      .build();
-    return this.graphQL.execute(executionInput);
+     ExecutionInput executionInput = ExecutionInput.newExecutionInput()
+       .query(query)
+       .build();
+    ExecutionResult result = this.graphQL.execute(executionInput);
+    return result;
   }
 }

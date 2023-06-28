@@ -1,5 +1,6 @@
 package com.github.chenrui333;
 
+import graphql.ExecutionInput;
 import io.jooby.Jooby;
 import io.jooby.ServerOptions;
 import org.slf4j.Logger;
@@ -18,9 +19,11 @@ public class GraphqlServer extends Jooby {
       var query = ctx.body().value("query");
       log.info("body: {}", ctx.body().value());
       log.info("query: {}", query);
-      return new GraphqlQueryExecutor().execute(query);
-      }
-    );
+//      String value = ctx.body().value();
+//      ExecutionInput executionInput = ExecutionInput.newExecutionInput().query(value).build();
+      String value = "query ken_test { movies(titleFilter: \"test\") { title } }";
+      return new GraphqlQueryExecutor().execute(value).getData();
+  });
   }
 
 

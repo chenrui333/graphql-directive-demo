@@ -1,1 +1,5 @@
-# graphql-directive-demo
+
+
+```
+brew install just
+```
