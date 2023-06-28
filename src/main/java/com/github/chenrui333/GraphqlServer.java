@@ -21,11 +21,8 @@ public class GraphqlServer extends Jooby {
     get("/", ctx -> "Hello World!");
     post("/", ctx -> "Hello World Post!");
     post("/graphql", ctx ->{
-
-
-      var rawPayload = new String(ctx.body().bytes());
       ObjectMapper objectMapper = new ObjectMapper();
-      JsonNode jsonNode = objectMapper.readTree(rawPayload);
+      JsonNode jsonNode = objectMapper.readTree(ctx.body().value());
       String query = jsonNode.get("query").asText();
       ExecutionResult executionResult = new GraphqlQueryExecutor().execute(query);
       Map<String, Object> resultObject = executionResult.toSpecification();
