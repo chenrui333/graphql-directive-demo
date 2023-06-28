@@ -25,7 +25,7 @@
 #}
 #directive @StringCase(case: Case) on FIELD_DEFINITION
 
-directive @markEntityMutation(entityType: String, entityData: String) on  MUTATION
+directive @markEntityMutation(entityType: String, entityData: String) on MUTATION | FIELD
 
 enum MarkEntityMutationSupportedType {
   GROUP
