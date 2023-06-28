@@ -9,6 +9,8 @@ public class GraphqlServer extends Jooby {
         .setPort(8000));
 
     get("/", ctx -> "Hello World!");
+    post("/", ctx -> "Hello World Post!");
+    post("/graphql", ctx -> new GraphqlQueryExecutor().execute(ctx.body().value("query")));
   }
 
 
