@@ -10,7 +10,7 @@ public class MarkEntityMutationDirective implements SchemaDirectiveWiring {
 
   private final Logger log = LoggerFactory.getLogger(MarkEntityMutationDirective.class);
 
-  /** when declaired on an object type */
+  /** when declared on an object type */
   @Override
   public GraphQLObjectType onObject(SchemaDirectiveWiringEnvironment<GraphQLObjectType> env) {
     var parent = env.getElement();
