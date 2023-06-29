@@ -20,5 +20,14 @@ jobs:
           distribution: 'corretto'
           java-version: '19'
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: build
+        run: ./gradlew clean build
