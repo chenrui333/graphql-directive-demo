@@ -13,11 +13,9 @@ import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static graphql.ExecutionInput.newExecutionInput;
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
 public class GraphqlQueryExecutor {
@@ -67,7 +65,6 @@ public class GraphqlQueryExecutor {
      ExecutionInput executionInput = ExecutionInput.newExecutionInput()
        .query(query)
        .build();
-    ExecutionResult result = this.graphQL.execute(executionInput);
-    return result;
+    return this.graphQL.execute(executionInput);
   }
 }
