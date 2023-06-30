@@ -12,12 +12,18 @@ public class MarkEntityMutationDirective implements SchemaDirectiveWiring {
 
   private final Logger log = LoggerFactory.getLogger(MarkEntityMutationDirective.class);
 
+  public final String DIRECTIVE_NAME = "addRating";
+
   @Override
   public GraphQLFieldDefinition onField(SchemaDirectiveWiringEnvironment<GraphQLFieldDefinition> environment) {
     GraphQLFieldDefinition field = environment.getElement();
     log.info("field: {}", field);
     DataFetcher<?> originalFetcher = environment.getCodeRegistry().getDataFetcher(
       environment.getFieldsContainer(), field);
+
+    if (!field.getName().equals(DIRECTIVE_NAME)) {
+      return field;
+    }
 
     DataFetcher<?> newFetcher = DataFetcherFactories.wrapDataFetcher(originalFetcher, ((dataFetchingEnvironment, value) -> {
       // Assuming your mutation returns a standard error object you can access.
