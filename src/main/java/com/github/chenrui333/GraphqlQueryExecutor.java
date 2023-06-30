@@ -26,12 +26,15 @@ public class GraphqlQueryExecutor {
     // Get the class loader
     ClassLoader classLoader = getClass().getClassLoader();
 
+    SchemaParser schemaParser = new SchemaParser();
+    SchemaGenerator schemaGenerator = new SchemaGenerator();
+
     // Load the schema file from the classpath
     File schemaFile = new File(classLoader.getResource("schema/schema.graphql").getFile());
 
-    TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaFile);
+    TypeDefinitionRegistry typeRegistry = schemaParser.parse(schemaFile);
     RuntimeWiring runtimeWiring = buildRuntimeWiring();
-    GraphQLSchema graphQLSchema = new SchemaGenerator().makeExecutableSchema(typeRegistry, runtimeWiring);
+    GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
 
     this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
   }
@@ -57,7 +60,7 @@ public class GraphqlQueryExecutor {
           Integer stars = (Integer) ratingInput.get("stars");
           Integer releaseYear = (Integer) ratingInput.get("releaseYear");
           // Replace this with actual logic to add rating
-          return new Rating(stars);
+          return new Rating(title, stars);
         }))
       .build();
   }
