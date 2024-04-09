@@ -9,7 +9,7 @@ type Query {
 }
 
 type Mutation {
-    addRating(rating: RatingInput!): Rating @markEntityMutation(entityType: GROUP, entityData: "groupSlug")
+    addRating(rating: RatingInput!): Rating @markEntityMutation
 }
 
 type Movie {
@@ -18,7 +18,8 @@ type Movie {
 }
 
 type Rating {
-    stars: Int
+    title: String!
+    stars: Int!
 }
 
 input RatingInput {
