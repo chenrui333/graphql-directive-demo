@@ -21,6 +21,10 @@
     {
       "updateTypes": ["major"],
       "automerge": false
+    },
+    {
+      "updateTypes": ["patch"],
+      "groupName": "patch updates"
     }
   ]
 }
